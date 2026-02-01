@@ -1,0 +1,74 @@
+// Shops Page Constants
+
+export const SHOP_CATEGORIES = [
+  { id: 'groceries', name: 'Groceries', icon: 'ShoppingCart', count: 45 },
+  { id: 'fashion', name: 'Fashion & Textiles', icon: 'Shirt', count: 32 },
+  { id: 'electronics', name: 'Electronics', icon: 'Smartphone', count: 28 },
+  { id: 'household', name: 'Household Essentials', icon: 'Home', count: 38 },
+  { id: 'beauty', name: 'Beauty & Personal Care', icon: 'Sparkles', count: 24 },
+  { id: 'general', name: 'General Stores', icon: 'Store', count: 56 },
+] as const;
+
+export const SHOPS_DATA = [
+  {
+    id: 'shop1',
+    name: 'FreshMart Groceries',
+    category: 'Groceries',
+    description: 'Your one-stop shop for fresh produce and daily essentials.',
+    image: 'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=600&q=80',
+    rating: 4.8,
+    products: 150,
+    location: 'Kollam',
+  },
+  {
+    id: 'shop2',
+    name: 'Urban Fashion Hub',
+    category: 'Fashion & Textiles',
+    description: 'Trendy clothing and accessories for all ages.',
+    image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&q=80',
+    rating: 4.6,
+    products: 320,
+    location: 'Thiruvananthapuram',
+  },
+  {
+    id: 'shop3',
+    name: 'TechWorld Electronics',
+    category: 'Electronics',
+    description: 'Latest gadgets and electronics at competitive prices.',
+    image: 'https://images.unsplash.com/photo-1491933382434-500287f9b54b?w=600&q=80',
+    rating: 4.7,
+    products: 200,
+    location: 'Kollam',
+  },
+  {
+    id: 'shop4',
+    name: 'Daily Needs Store',
+    category: 'General Stores',
+    description: 'Everything you need for your household under one roof.',
+    image: 'https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=600&q=80',
+    rating: 4.5,
+    products: 500,
+    location: 'Thiruvananthapuram',
+  },
+  {
+    id: 'shop5',
+    name: 'Style Avenue',
+    category: 'Fashion & Textiles',
+    description: 'Premium fashion wear for the modern lifestyle.',
+    image: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=600&q=80',
+    rating: 4.9,
+    products: 280,
+    location: 'Kollam',
+  },
+  {
+    id: 'shop6',
+    name: 'Gadget Galaxy',
+    category: 'Electronics',
+    description: 'Your destination for smartphones and accessories.',
+    image: 'https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=600&q=80',
+    rating: 4.4,
+    products: 180,
+    location: 'Thiruvananthapuram',
+  },
+] as const;
+
