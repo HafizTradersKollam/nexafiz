@@ -1,47 +1,35 @@
-// ============================================
-// NEXAFIZ GLOBAL CONSTANTS
-// Shared constants used across multiple pages
-// Page-specific constants are in each page's constants.ts
-// ============================================
-
 // Brand Colors (for reference - actual colors in globals.css)
 export const COLORS = {
   primary: '#00A86B',
   accent: '#F5A623',
 } as const;
 
-// Company Information - Used in Header, Footer, Layout
+// Company Information 
 export const COMPANY = {
   name: 'NEXAFIZ',
   tagline: 'Turn Your Daily Life Into Income',
   description: 'A next-generation digital platform that converts your daily purchases — and the purchases made by your network — into a continuous income stream.',
   domain: 'nexafizglobal.com',
-  email: 'hafiztraderstrivandrum@gmail.com',
-  supportEmail: 'support@nexafizglobal.com',
-  phone: '+91 98765 43210',
+  email: 'nexafizglobal@gmail.com',
+  supportEmail: 'nexafizglobal@gmail.com',
+  phone: '+91 86060 46666',
   offices: [
     {
       name: 'Kollam Office',
-      address: 'Hafiz Fabrics, Masjid Complex, Bypass Road',
+      address: 'Nexafiz Global, Masjid Complex, Bypass Road',
       city: 'Kallumthazham PO, Kollam – 691004',
       state: 'Kerala, India',
-    },
-    {
-      name: 'Thiruvananthapuram Office',
-      address: 'Nexafiz Support Center, City Centre',
-      city: 'Thiruvananthapuram, Kerala',
-      state: 'Kerala, India',
-    },
+    }
   ],
   socialLinks: {
     facebook: 'https://facebook.com/nexafizglobal',
     instagram: 'https://instagram.com/nexafizglobal',
     youtube: 'https://youtube.com/@nexafizglobal',
-    whatsapp: 'https://wa.me/919876543210',
+    whatsapp: 'https://wa.me/918606046666',
   },
 } as const;
 
-// Navigation Links - Used in Header
+// Navigation Links 
 export const NAV_LINKS = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
@@ -51,7 +39,7 @@ export const NAV_LINKS = [
   { name: 'Contact', href: '/contact' },
 ] as const;
 
-// Stats - Used in multiple pages
+// Stats
 export const STATS = [
   { value: '200+', label: 'Partner Shops' },
   { value: '10K+', label: 'Active Members' },
