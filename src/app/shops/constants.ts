@@ -1,4 +1,4 @@
-// Shops Page Constants
+export const SHOPS_COMING_SOON = true;
 
 export const SHOP_CATEGORIES = [
   { id: 'groceries', name: 'Groceries', icon: 'ShoppingCart', count: 45 },
@@ -71,4 +71,3 @@ export const SHOPS_DATA = [
     location: 'Thiruvananthapuram',
   },
 ] as const;
-

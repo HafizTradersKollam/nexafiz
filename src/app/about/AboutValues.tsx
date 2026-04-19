@@ -30,7 +30,7 @@ export default function AboutValues() {
           return (
             <StaggerItem key={index}>
               <Card hover className="text-center h-full">
-                <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center mb-5 shadow-lg shadow-primary/30">
+                <div className="w-16 h-16 mx-auto rounded-2xl bg-linear-to-br from-primary to-primary-dark flex items-center justify-center mb-5 shadow-lg shadow-primary/30">
                   <Icon size={32} className="text-white" />
                 </div>
                 <CardTitle className="mb-2">{value.title}</CardTitle>

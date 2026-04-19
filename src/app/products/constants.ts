@@ -1,4 +1,5 @@
-// Products Page Constants
+
+export const PRODUCTS_COMING_SOON = true;
 
 export const PRODUCT_CATEGORIES = [
   'All Products',
@@ -156,4 +157,3 @@ export const PRODUCTS_DATA = [
     specifications: { Brand: 'SkinCare Plus', Size: '200ml' },
   },
 ];
-

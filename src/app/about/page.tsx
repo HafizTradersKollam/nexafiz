@@ -3,6 +3,7 @@ import AboutHero from './AboutHero';
 import AboutValues from './AboutValues';
 import AboutDifference from './AboutDifference';
 import AboutModules from './AboutModules';
+import AboutCompany from './AboutCompany';
 
 export const metadata: Metadata = {
   title: 'About Us',
@@ -14,10 +15,10 @@ export default function AboutPage() {
   return (
     <>
       <AboutHero />
+      <AboutCompany />
       <AboutValues />
       <AboutDifference />
       <AboutModules />
     </>
   );
 }
-

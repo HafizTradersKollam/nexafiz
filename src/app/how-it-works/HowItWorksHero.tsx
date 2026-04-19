@@ -54,7 +54,7 @@ export default function HowItWorksHero() {
 
           <Button size="lg" className="group">
             <PlayCircle size={20} />
-            Watch Demo Video
+            Demo Video Coming Soon
           </Button>
         </motion.div>
 
@@ -66,12 +66,12 @@ export default function HowItWorksHero() {
           className="relative"
         >
           <div className="relative aspect-video bg-surface border border-border rounded-2xl overflow-hidden">
-            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10">
+            <div className="absolute inset-0 flex items-center justify-center bg-linear-to-br from-primary/10 to-accent/10">
               <div className="text-center">
                 <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
                   <PlayCircle size={40} className="text-primary" />
                 </div>
-                <p className="text-foreground-muted">Video Placeholder</p>
+                <p className="text-foreground-muted">Coming Soon</p>
               </div>
             </div>
           </div>

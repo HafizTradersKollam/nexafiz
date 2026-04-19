@@ -1,28 +1,25 @@
 @import "tailwindcss";
 
-/* ============================================
-   NEXAFIZ DESIGN SYSTEM
-   ============================================ */
 
-/* Light Mode - Clean Professional White */
+/* Light Mode */
 :root {
-  /* Primary Colors - Green Focus */
+  /* Primary Colors  */
   --primary: #00A86B;
   --primary-dark: #008F5B;
   --primary-light: #E6F7F0;
 
-  /* Accent Colors - Supporting Gold */
+  /* Accent Colors  */
   --accent: #F5A623;
   --accent-dark: #E09515;
   --accent-light: #FEF8EC;
 
-  /* Background & Surface - Clean White */
+  /* Background & Surface */
   --background: #FFFFFF;
   --background-alt: #F8FAFC;
   --surface: #F1F5F9;
   --surface-hover: #E2E8F0;
 
-  /* Text Colors - High Contrast */
+  /* Text Colors  */
   --foreground: #1E293B;
   --foreground-muted: #475569;
   --foreground-subtle: #64748B;

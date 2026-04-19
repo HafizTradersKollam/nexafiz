@@ -1,8 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Store, MapPin, ShieldCheck } from 'lucide-react';
+import { Store, MapPin, ShieldCheck, Clock } from 'lucide-react';
 import Section from '@/components/ui/Section';
+import { SHOPS_COMING_SOON } from './constants';
 
 const highlights = [
   { icon: Store, label: '200+ Partner Shops' },
@@ -27,10 +28,25 @@ export default function ShopsHero() {
             Our <span className="gradient-text">Partner Shops</span>
           </h1>
 
-          <p className="text-lg text-foreground-muted leading-relaxed mb-10">
-            Shop from our network of verified partner stores. Every purchase you make contributes 
+          <p className="text-lg text-foreground-muted leading-relaxed mb-6">
+            Shop from our network of verified partner stores. Every purchase you make contributes
             to your business volume and earning potential.
           </p>
+
+          {/* Coming Soon Notice */}
+          {SHOPS_COMING_SOON && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="inline-flex items-center gap-2.5 px-5 py-3 mb-8 bg-amber-50 border border-amber-200 text-amber-800 rounded-xl text-sm font-medium"
+            >
+              <Clock size={16} className="shrink-0" />
+              <span>
+                Shops shown below are for illustration only. Real partner network launches soon.
+              </span>
+            </motion.div>
+          )}
 
           {/* Highlights */}
           <div className="flex flex-wrap justify-center gap-6">
@@ -52,4 +68,3 @@ export default function ShopsHero() {
     </Section>
   );
 }
-

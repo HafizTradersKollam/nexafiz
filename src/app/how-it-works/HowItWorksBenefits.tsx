@@ -34,7 +34,7 @@ export default function HowItWorksBenefits() {
           return (
             <StaggerItem key={index}>
               <Card hover className="h-full text-center group">
-                <div className="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br from-accent to-accent-dark flex items-center justify-center mb-4 shadow-lg shadow-accent/30 group-hover:scale-110 transition-transform duration-300">
+                <div className="w-14 h-14 mx-auto rounded-2xl bg-linear-to-br from-accent to-accent-dark flex items-center justify-center mb-4 shadow-lg shadow-accent/30 group-hover:scale-110 transition-transform duration-300">
                   <Icon size={28} className="text-white" />
                 </div>
                 <CardTitle className="mb-2">{benefit.title}</CardTitle>

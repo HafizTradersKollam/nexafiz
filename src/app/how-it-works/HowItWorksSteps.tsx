@@ -25,7 +25,7 @@ export default function HowItWorksSteps() {
 
       <StaggerContainer className="relative max-w-4xl mx-auto">
         {/* Vertical Line */}
-        <div className="absolute left-8 lg:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-accent to-primary hidden sm:block" />
+        <div className="absolute left-8 lg:left-1/2 top-0 bottom-0 w-0.5 bg-linear-to-b from-primary via-accent to-primary hidden sm:block" />
 
         {PROCESS_STEPS.map((step, index) => {
           const Icon = iconMap[step.icon] || UserPlus;
@@ -38,7 +38,7 @@ export default function HowItWorksSteps() {
               }`}>
                 {/* Step Number Circle */}
                 <div className="absolute left-8 lg:left-1/2 -translate-x-1/2 z-10 hidden sm:flex">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-primary-dark text-white text-xl font-bold flex items-center justify-center shadow-lg shadow-primary/30">
+                  <div className="w-16 h-16 rounded-full bg-linear-to-br from-primary to-primary-dark text-white text-xl font-bold flex items-center justify-center shadow-lg shadow-primary/30">
                     {step.step}
                   </div>
                 </div>
@@ -59,7 +59,6 @@ export default function HowItWorksSteps() {
                   </div>
                 </div>
 
-                {/* Empty space for alignment */}
                 <div className="flex-1 hidden lg:block" />
               </div>
             </StaggerItem>

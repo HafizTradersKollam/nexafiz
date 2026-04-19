@@ -17,8 +17,7 @@ export const PROCESS_STEPS = [
   {
     step: 2,
     title: 'Shop Daily Essentials',
-    description: 'Purchase your regular items from our network of partner shops. Groceries, clothing, electronics — everything you already buy.',
-    icon: 'ShoppingBag',
+description: 'Buy your regular items from us or our partner store network—groceries, clothes, electronics, and more. Everything you already purchase, now works for you.',    icon: 'ShoppingBag',
   },
   {
     step: 3,

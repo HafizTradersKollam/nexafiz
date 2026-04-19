@@ -28,10 +28,11 @@ const socialLinks = [
 ];
 
 const quickLinks = [
-  { name: 'Privacy Policy', href: '/privacy' },
-  { name: 'Terms of Service', href: '/terms' },
   { name: 'FAQ', href: '/faq' },
   { name: 'Support', href: '/contact' },
+  { name: 'Business Plan', href: '/business-plan' },
+  { name: 'Privacy Policy', href: '/privacy' },
+  { name: 'Terms of Service', href: '/terms' },
 ];
 
 export default function Footer() {
