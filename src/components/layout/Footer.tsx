@@ -30,6 +30,7 @@ const socialLinks = [
 const quickLinks = [
   { name: 'FAQ', href: '/faq' },
   { name: 'Support', href: '/contact' },
+  { name: 'Register', href: '/register' },
   { name: 'Business Plan', href: '/business-plan' },
   { name: 'Privacy Policy', href: '/privacy' },
   { name: 'Terms of Service', href: '/terms' },

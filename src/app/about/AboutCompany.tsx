@@ -1,60 +1,65 @@
-'use client';
+"use client";
 
 import {
   ShoppingBag,
   IndianRupee,
   Shield,
   Users,
-
   Wallet,
   Award,
   BadgeCheck,
-} from 'lucide-react';
-import Section from '@/components/ui/Section';
-import AnimatedSection, { StaggerContainer, StaggerItem } from '@/components/ui/AnimatedSection';
+} from "lucide-react";
+import Section from "@/components/ui/Section";
+import AnimatedSection, {
+  StaggerContainer,
+  StaggerItem,
+} from "@/components/ui/AnimatedSection";
 
 const FEATURES = [
   {
     icon: ShoppingBag,
-    title: 'Smart Shopping',
-    description: 'Find profit and value in every purchase you already make daily.',
+    title: "Smart Shopping",
+    description:
+      "Find profit and value in every purchase you already make daily.",
   },
   {
     icon: IndianRupee,
-    title: 'Spend Now Income',
-    description: 'Make every penny a part of your financial growth — automatically.',
+    title: "Spend Now Income",
+    description:
+      "Make every penny a part of your financial growth — automatically.",
   },
   {
     icon: Shield,
-    title: 'Secure Future',
-    description: "Build your own business empire with Nexafiz's powerful system.",
+    title: "Secure Future",
+    description:
+      "Build your own business empire with Nexafiz's powerful system.",
   },
 ];
 
 const HIGHLIGHTS = [
   {
     icon: BadgeCheck,
-    label: 'Retail Profit',
-    desc: 'The best direct benefit that members can get.',
-    color: 'bg-primary-light text-primary',
+    label: "Retail Profit",
+    desc: "The best direct benefit that members can get.",
+    color: "bg-primary-light text-primary",
   },
   {
     icon: Wallet,
-    label: 'Cashback Benefits',
-    desc: 'Earn back through your own shopping activity.',
-    color: 'bg-accent-light text-accent-dark',
+    label: "Cashback Benefits",
+    desc: "Earn back through your own shopping activity.",
+    color: "bg-accent-light text-accent-dark",
   },
   {
     icon: Users,
-    label: 'Team Income',
-    desc: 'Bonuses from the growth of your business network.',
-    color: 'bg-primary-light text-primary',
+    label: "Team Income",
+    desc: "Bonuses from the growth of your business network.",
+    color: "bg-primary-light text-primary",
   },
   {
     icon: Award,
-    label: 'Rewards & Incentives',
-    desc: 'Deserved recognition and rewards for every achievement.',
-    color: 'bg-accent-light text-accent-dark',
+    label: "Rewards & Incentives",
+    desc: "Deserved recognition and rewards for every achievement.",
+    color: "bg-accent-light text-accent-dark",
   },
 ];
 
@@ -70,13 +75,15 @@ export default function AboutCompany() {
                 About the Company
               </span>
               <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
-                Nexafiz: A New{' '}
-                <span className="gradient-text-accent">Business Culture</span> for Change
+                Nexafiz: A New{" "}
+                <span className="gradient-text-accent">Business Culture</span>{" "}
+                for Change
               </h2>
               <p className="text-lg text-foreground-muted leading-relaxed max-w-3xl mx-auto">
-                Nexafiz Global Private Limited is a fast-growing innovative venture in the field of
-                direct selling. We offer a wide range of food products, home care, personal care, and
-                dental care categories — prepared to provide the best value and quality.
+                Nexafiz Global Private Limited is a fast-growing innovative
+                venture in the field of direct selling. We offer a wide range of
+                food products, home care, personal care, and dental care
+                categories — prepared to provide the best value and quality.
               </p>
             </div>
           </AnimatedSection>
@@ -87,7 +94,7 @@ export default function AboutCompany() {
               <div className="absolute top-0 left-0 w-40 h-40 bg-primary/5 rounded-full -translate-x-1/2 -translate-y-1/2" />
               <div className="absolute bottom-0 right-0 w-32 h-32 bg-accent/5 rounded-full translate-x-1/2 translate-y-1/2" />
               <p className="relative text-xl lg:text-2xl font-bold text-foreground mb-2">
-                Shop Smart... Save More...{' '}
+                Shop Smart... Save More...{" "}
                 <span className="gradient-text">Earn More!</span>
               </p>
               <p className="relative text-sm text-foreground-muted">
@@ -107,10 +114,15 @@ export default function AboutCompany() {
               <StaggerItem key={f.title}>
                 <div className="flex flex-col items-center text-center p-6 bg-surface border border-border rounded-2xl h-full group hover:border-primary/30 transition-colors">
                   <div className="w-12 h-12 rounded-xl bg-primary-light flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
-                    <f.icon size={22} className="text-primary group-hover:text-white transition-colors" />
+                    <f.icon
+                      size={22}
+                      className="text-primary group-hover:text-white transition-colors"
+                    />
                   </div>
                   <h4 className="font-bold text-foreground mb-2">{f.title}</h4>
-                  <p className="text-sm text-foreground-muted leading-relaxed">{f.description}</p>
+                  <p className="text-sm text-foreground-muted leading-relaxed">
+                    {f.description}
+                  </p>
                 </div>
               </StaggerItem>
             ))}
@@ -132,11 +144,15 @@ export default function AboutCompany() {
             {HIGHLIGHTS.map((h) => (
               <StaggerItem key={h.label}>
                 <div className="flex items-start gap-4 p-5 bg-surface border border-border rounded-2xl hover:border-primary/30 transition-colors">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${h.color}`}>
+                  <div
+                    className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${h.color}`}
+                  >
                     <h.icon size={20} />
                   </div>
                   <div>
-                    <h4 className="font-bold text-foreground mb-1">{h.label}</h4>
+                    <h4 className="font-bold text-foreground mb-1">
+                      {h.label}
+                    </h4>
                     <p className="text-sm text-foreground-muted">{h.desc}</p>
                   </div>
                 </div>
