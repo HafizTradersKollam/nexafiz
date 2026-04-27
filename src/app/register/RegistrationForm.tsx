@@ -3,8 +3,8 @@
 import { useState, useRef } from 'react';
 import {
   Send, Loader2, CheckCircle2, AlertCircle,
-  User, Phone,  CreditCard, Building2,
-  Users, Shield, FileText, ChevronRight,
+  User, Phone, CreditCard, Building2,
+  Shield, FileText, ChevronRight,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import AnimatedSection from '@/components/ui/AnimatedSection';
@@ -15,20 +15,34 @@ import { cn } from '@/lib/utils';
 // ── Types ─────────────────────────────────────────────────────────────────────
 type FormData = {
   // Personal
-  fullName: string; fatherName: string; motherName: string;
-  gender: string; dob: string; maritalStatus: string; occupation: string;
+  fullName: string;
+  fatherName: string;
+  motherName: string;
+  gender: string;
+  dob: string;
+  maritalStatus: string;
+  occupation: string;
   // Contact
-  mobile: string; email: string;
-  address: string; city: string; state: string; pinCode: string;
-  // Network
-  sponsorId: string; sponsorName: string; placement: string; username: string;
+  mobile: string;
+  email: string;
+  address: string;
+  city: string;
+  state: string;
+  pinCode: string;
   // KYC
-  panNumber: string; aadhaarNumber: string;
+  panNumber: string;
+  aadhaarNumber: string;
   // Bank
-  bankName: string; accountHolderName: string; accountNumber: string;
-  accountType: string; branch: string; ifscCode: string;
+  bankName: string;
+  accountHolderName: string;
+  accountNumber: string;
+  accountType: string;
+  branch: string;
+  ifscCode: string;
   // Nominee
-  nomineeName: string; nomineeRelationship: string; nomineeDob: string;
+  nomineeName: string;
+  nomineeRelationship: string;
+  nomineeAge: string;
   // Declaration
   declaration: boolean;
 };
@@ -36,65 +50,77 @@ type FormData = {
 type FormErrors = Partial<Record<keyof FormData | 'server', string>>;
 
 const EMPTY: FormData = {
-  fullName: '', fatherName: '', motherName: '',
-  gender: '', dob: '', maritalStatus: '', occupation: '',
-  mobile: '', email: '',
-  address: '', city: '', state: '', pinCode: '',
-  sponsorId: '', sponsorName: '', placement: '', username: '',
-  panNumber: '', aadhaarNumber: '',
-  bankName: '', accountHolderName: '', accountNumber: '',
-  accountType: '', branch: '', ifscCode: '',
-  nomineeName: '', nomineeRelationship: '', nomineeDob: '',
+  fullName: '',
+  fatherName: '',
+  motherName: '',
+  gender: '',
+  dob: '',
+  maritalStatus: '',
+  occupation: '',
+  mobile: '',
+  email: '',
+  address: '',
+  city: '',
+  state: '',
+  pinCode: '',
+  panNumber: '',
+  aadhaarNumber: '',
+  bankName: '',
+  accountHolderName: '',
+  accountNumber: '',
+  accountType: '',
+  branch: '',
+  ifscCode: '',
+  nomineeName: '',
+  nomineeRelationship: '',
+  nomineeAge: '',
   declaration: false,
 };
 
-// ── Steps config ──────────────────────────────────────────────────────────────
+// ── Steps ─────────────────────────────────────────────────────────────────────
 const STEPS = [
-  { id: 'personal',   label: 'Personal',  icon: User       },
-  { id: 'contact',    label: 'Contact',   icon: Phone      },
-  { id: 'network',    label: 'Network',   icon: Users      },
-  { id: 'kyc',        label: 'KYC',       icon: Shield     },
-  { id: 'bank',       label: 'Bank',      icon: Building2  },
-  { id: 'nominee',    label: 'Nominee',   icon: CreditCard },
-  { id: 'declaration',label: 'Declare',   icon: FileText   },
+  { id: 'personal',    label: 'Personal', icon: User       },
+  { id: 'contact',     label: 'Contact',  icon: Phone      },
+  { id: 'kyc',         label: 'KYC',      icon: Shield     },
+  { id: 'bank',        label: 'Bank',     icon: Building2  },
+  { id: 'nominee',     label: 'Nominee',  icon: CreditCard },
+  { id: 'declaration', label: 'Declare',  icon: FileText   },
 ];
 
-// ── Validation ────────────────────────────────────────────────────────────────
+// ── Per-step validation ───────────────────────────────────────────────────────
 function validateStep(step: number, data: FormData): FormErrors {
   const e: FormErrors = {};
+
   if (step === 0) {
-    if (!data.fullName.trim())    e.fullName    = 'Full name is required.';
-    if (!data.fatherName.trim())  e.fatherName  = "Father's name is required.";
-    if (!data.motherName.trim())  e.motherName  = "Mother's name is required.";
-    if (!data.gender)             e.gender      = 'Please select gender.';
-    if (!data.dob)                e.dob         = 'Date of birth is required.';
-    if (!data.maritalStatus)      e.maritalStatus = 'Please select marital status.';
-    if (!data.occupation.trim())  e.occupation  = 'Occupation is required.';
+    if (!data.fullName.trim())      e.fullName      = 'Full name is required.';
+    if (!data.fatherName.trim())    e.fatherName    = "Father's name is required.";
+    if (!data.motherName.trim())    e.motherName    = "Mother's name is required.";
+    if (!data.gender)               e.gender        = 'Please select gender.';
+    if (!data.dob)                  e.dob           = 'Date of birth is required.';
+    if (!data.maritalStatus)        e.maritalStatus = 'Please select marital status.';
+    if (!data.occupation.trim())    e.occupation    = 'Occupation is required.';
   }
+
   if (step === 1) {
-    if (!data.mobile.trim())       e.mobile  = 'Mobile number is required.';
+    if (!data.mobile.trim())        e.mobile  = 'Mobile number is required.';
     else if (!/^[\+]?[\d\s\-\(\)]{7,20}$/.test(data.mobile.trim())) e.mobile = 'Enter a valid mobile number.';
-    if (!data.email.trim())        e.email   = 'Email is required.';
+    if (!data.email.trim())         e.email   = 'Email is required.';
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) e.email = 'Enter a valid email address.';
-    if (!data.address.trim())      e.address = 'Address is required.';
-    if (!data.city.trim())         e.city    = 'City is required.';
-    if (!data.state.trim())        e.state   = 'State is required.';
-    if (!data.pinCode.trim())      e.pinCode = 'PIN code is required.';
+    if (!data.address.trim())       e.address = 'Address is required.';
+    if (!data.city.trim())          e.city    = 'City is required.';
+    if (!data.state.trim())         e.state   = 'State is required.';
+    if (!data.pinCode.trim())       e.pinCode = 'PIN code is required.';
     else if (!/^\d{6}$/.test(data.pinCode.trim())) e.pinCode = 'Enter a valid 6-digit PIN code.';
   }
+
   if (step === 2) {
-    if (!data.sponsorId.trim())   e.sponsorId   = 'Sponsor ID is required.';
-    if (!data.sponsorName.trim()) e.sponsorName = 'Sponsor name is required.';
-    if (!data.placement)          e.placement   = 'Please select placement.';
-    if (!data.username.trim())    e.username    = 'Username is required.';
-  }
-  if (step === 3) {
-    if (!data.panNumber.trim())    e.panNumber    = 'PAN number is required.';
+    if (!data.panNumber.trim())     e.panNumber     = 'PAN number is required.';
     else if (!/^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$/.test(data.panNumber.trim())) e.panNumber = 'Enter a valid PAN (e.g. ABCDE1234F).';
     if (!data.aadhaarNumber.trim()) e.aadhaarNumber = 'Aadhaar number is required.';
     else if (!/^\d{12}$/.test(data.aadhaarNumber.replace(/\s/g, ''))) e.aadhaarNumber = 'Enter a valid 12-digit Aadhaar number.';
   }
-  if (step === 4) {
+
+  if (step === 3) {
     if (!data.bankName.trim())          e.bankName          = 'Bank name is required.';
     if (!data.accountHolderName.trim()) e.accountHolderName = 'Account holder name is required.';
     if (!data.accountNumber.trim())     e.accountNumber     = 'Account number is required.';
@@ -104,21 +130,23 @@ function validateStep(step: number, data: FormData): FormErrors {
     if (!data.ifscCode.trim())          e.ifscCode          = 'IFSC code is required.';
     else if (!/^[A-Za-z]{4}0[A-Za-z0-9]{6}$/.test(data.ifscCode.trim())) e.ifscCode = 'Enter a valid IFSC code.';
   }
-  if (step === 5) {
+
+  if (step === 4) {
     if (!data.nomineeName.trim())         e.nomineeName         = 'Nominee name is required.';
     if (!data.nomineeRelationship.trim()) e.nomineeRelationship = 'Relationship is required.';
-    if (!data.nomineeDob)                 e.nomineeDob          = 'Nominee date of birth is required.';
+    if (!data.nomineeAge.trim())          e.nomineeAge          = 'Nominee age is required.';
+    else if (isNaN(Number(data.nomineeAge)) || +data.nomineeAge < 1 || +data.nomineeAge > 120) e.nomineeAge = 'Enter a valid age between 1 and 120.';
   }
-  if (step === 6) {
+
+  if (step === 5) {
     if (!data.declaration) e.declaration = 'You must accept the declaration to proceed.';
   }
+
   return e;
 }
 
-// ── Field helpers ─────────────────────────────────────────────────────────────
-function Field({
-  label, error, children,
-}: { label: string; error?: string; children: React.ReactNode }) {
+// ── Shared field wrapper ──────────────────────────────────────────────────────
+function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
   return (
     <div>
       <label className="block text-sm font-medium text-foreground mb-1.5">{label}</label>
@@ -132,12 +160,14 @@ function Field({
   );
 }
 
-function RadioGroup({
-  label, name, options, value, onChange, error,
-}: {
-  label: string; name: string;
+// ── Radio pill group ──────────────────────────────────────────────────────────
+function RadioGroup({ label, name, options, value, onChange, error }: {
+  label: string;
+  name: string;
   options: { value: string; label: string }[];
-  value: string; onChange: (v: string) => void; error?: string;
+  value: string;
+  onChange: (v: string) => void;
+  error?: string;
 }) {
   return (
     <Field label={label} error={error}>
@@ -160,15 +190,8 @@ function RadioGroup({
               onChange={() => onChange(opt.value)}
               className="sr-only"
             />
-            <span
-              className={cn(
-                'w-4 h-4 rounded-full border-2 flex items-center justify-center',
-                value === opt.value ? 'border-primary' : 'border-foreground-muted'
-              )}
-            >
-              {value === opt.value && (
-                <span className="w-2 h-2 rounded-full bg-primary" />
-              )}
+            <span className={cn('w-4 h-4 rounded-full border-2 flex items-center justify-center', value === opt.value ? 'border-primary' : 'border-foreground-muted')}>
+              {value === opt.value && <span className="w-2 h-2 rounded-full bg-primary" />}
             </span>
             {opt.label}
           </label>
@@ -178,10 +201,8 @@ function RadioGroup({
   );
 }
 
-// ── Step content ──────────────────────────────────────────────────────────────
-function StepPersonal({ data, errors, onChange }: {
-  data: FormData; errors: FormErrors; onChange: (k: keyof FormData, v: string) => void;
-}) {
+// ── Step 1: Personal ──────────────────────────────────────────────────────────
+function StepPersonal({ data, errors, onChange }: { data: FormData; errors: FormErrors; onChange: (k: keyof FormData, v: string) => void }) {
   return (
     <div className="space-y-5">
       <div className="grid sm:grid-cols-2 gap-5">
@@ -218,9 +239,8 @@ function StepPersonal({ data, errors, onChange }: {
   );
 }
 
-function StepContact({ data, errors, onChange }: {
-  data: FormData; errors: FormErrors; onChange: (k: keyof FormData, v: string) => void;
-}) {
+// ── Step 2: Contact ───────────────────────────────────────────────────────────
+function StepContact({ data, errors, onChange }: { data: FormData; errors: FormErrors; onChange: (k: keyof FormData, v: string) => void }) {
   return (
     <div className="space-y-5">
       <div className="grid sm:grid-cols-2 gap-5">
@@ -245,52 +265,24 @@ function StepContact({ data, errors, onChange }: {
   );
 }
 
-function StepNetwork({ data, errors, onChange }: {
-  data: FormData; errors: FormErrors; onChange: (k: keyof FormData, v: string) => void;
-}) {
-  return (
-    <div className="space-y-5">
-      <div className="grid sm:grid-cols-2 gap-5">
-        <Input label="Sponsor ID *" name="sponsorId" placeholder="e.g. NX000123" value={data.sponsorId} onChange={(e) => onChange('sponsorId', e.target.value)} error={errors.sponsorId} />
-        <Input label="Sponsor Name *" name="sponsorName" placeholder="Sponsor's full name" value={data.sponsorName} onChange={(e) => onChange('sponsorName', e.target.value)} error={errors.sponsorName} />
-      </div>
-      <div className="grid sm:grid-cols-2 gap-5">
-        <RadioGroup
-          label="Placement *" name="placement"
-          options={[{ value: 'Left', label: '⬅ Left' }, { value: 'Right', label: 'Right ➡' }]}
-          value={data.placement} onChange={(v) => onChange('placement', v)} error={errors.placement}
-        />
-        <Input label="Preferred Username *" name="username" placeholder="e.g. john_nx" value={data.username} onChange={(e) => onChange('username', e.target.value)} error={errors.username} />
-      </div>
-      <div className="p-4 bg-primary/5 border border-primary/20 rounded-xl text-sm text-foreground-muted">
-        <strong className="text-foreground">Note:</strong> Your Sponsor ID and placement determine your position in the binary network. Please confirm with your sponsor before submitting.
-      </div>
-    </div>
-  );
-}
-
-function StepKYC({ data, errors, onChange }: {
-  data: FormData; errors: FormErrors; onChange: (k: keyof FormData, v: string) => void;
-}) {
+// ── Step 3: KYC ───────────────────────────────────────────────────────────────
+function StepKYC({ data, errors, onChange }: { data: FormData; errors: FormErrors; onChange: (k: keyof FormData, v: string) => void }) {
   return (
     <div className="space-y-5">
       <Input
-        label="PAN Number *" name="panNumber"
-        placeholder="ABCDE1234F"
+        label="PAN Number *" name="panNumber" placeholder="ABCDE1234F"
         value={data.panNumber}
         onChange={(e) => onChange('panNumber', e.target.value.toUpperCase())}
         error={errors.panNumber}
       />
       <Input
-        label="Aadhaar Number *" name="aadhaarNumber"
-        placeholder="1234 5678 9012"
-        maxLength={12}
+        label="Aadhaar Number *" name="aadhaarNumber" placeholder="123456789012" maxLength={12}
         value={data.aadhaarNumber}
         onChange={(e) => onChange('aadhaarNumber', e.target.value.replace(/\D/g, ''))}
         error={errors.aadhaarNumber}
       />
       <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-800">
-        <strong>Documents to attach (submit to office):</strong>
+        <strong>Documents to submit to office:</strong>
         <ul className="mt-2 space-y-1 list-disc list-inside text-amber-700">
           <li>Self-attested copy of Aadhaar Card</li>
           <li>Self-attested copy of PAN Card</li>
@@ -303,9 +295,8 @@ function StepKYC({ data, errors, onChange }: {
   );
 }
 
-function StepBank({ data, errors, onChange }: {
-  data: FormData; errors: FormErrors; onChange: (k: keyof FormData, v: string) => void;
-}) {
+// ── Step 4: Bank ──────────────────────────────────────────────────────────────
+function StepBank({ data, errors, onChange }: { data: FormData; errors: FormErrors; onChange: (k: keyof FormData, v: string) => void }) {
   return (
     <div className="space-y-5">
       <div className="grid sm:grid-cols-2 gap-5">
@@ -313,7 +304,12 @@ function StepBank({ data, errors, onChange }: {
         <Input label="Account Holder Name *" name="accountHolderName" placeholder="As per bank records" value={data.accountHolderName} onChange={(e) => onChange('accountHolderName', e.target.value)} error={errors.accountHolderName} />
       </div>
       <div className="grid sm:grid-cols-2 gap-5">
-        <Input label="Account Number *" name="accountNumber" placeholder="Enter account number" value={data.accountNumber} onChange={(e) => onChange('accountNumber', e.target.value.replace(/\D/g, ''))} error={errors.accountNumber} />
+        <Input
+          label="Account Number *" name="accountNumber" placeholder="Enter account number"
+          value={data.accountNumber}
+          onChange={(e) => onChange('accountNumber', e.target.value.replace(/\D/g, ''))}
+          error={errors.accountNumber}
+        />
         <RadioGroup
           label="Account Type *" name="accountType"
           options={[{ value: 'Savings', label: 'Savings' }, { value: 'Current', label: 'Current' }]}
@@ -323,8 +319,7 @@ function StepBank({ data, errors, onChange }: {
       <div className="grid sm:grid-cols-2 gap-5">
         <Input label="Branch *" name="branch" placeholder="Branch name" value={data.branch} onChange={(e) => onChange('branch', e.target.value)} error={errors.branch} />
         <Input
-          label="IFSC Code *" name="ifscCode"
-          placeholder="SBIN0001234"
+          label="IFSC Code *" name="ifscCode" placeholder="SBIN0001234"
           value={data.ifscCode}
           onChange={(e) => onChange('ifscCode', e.target.value.toUpperCase())}
           error={errors.ifscCode}
@@ -334,27 +329,33 @@ function StepBank({ data, errors, onChange }: {
   );
 }
 
-function StepNominee({ data, errors, onChange }: {
-  data: FormData; errors: FormErrors; onChange: (k: keyof FormData, v: string) => void;
-}) {
+// ── Step 5: Nominee ───────────────────────────────────────────────────────────
+function StepNominee({ data, errors, onChange }: { data: FormData; errors: FormErrors; onChange: (k: keyof FormData, v: string) => void }) {
   return (
     <div className="space-y-5">
       <div className="grid sm:grid-cols-2 gap-5">
         <Input label="Nominee Full Name *" name="nomineeName" placeholder="Nominee's name" value={data.nomineeName} onChange={(e) => onChange('nomineeName', e.target.value)} error={errors.nomineeName} />
         <Input label="Relationship *" name="nomineeRelationship" placeholder="e.g. Spouse, Son, Daughter" value={data.nomineeRelationship} onChange={(e) => onChange('nomineeRelationship', e.target.value)} error={errors.nomineeRelationship} />
       </div>
-      <Field label="Nominee Date of Birth *" error={errors.nomineeDob}>
-        <input
-          type="date"
-          value={data.nomineeDob}
-          onChange={(e) => onChange('nomineeDob', e.target.value)}
-          className="w-full px-4 py-3 bg-surface border border-border rounded-xl text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition"
-        />
+      <Field label="Nominee Age *" error={errors.nomineeAge}>
+        <div className="relative">
+          <input
+            type="number"
+            min={1}
+            max={120}
+            placeholder="e.g. 35"
+            value={data.nomineeAge}
+            onChange={(e) => onChange('nomineeAge', e.target.value)}
+            className="w-full px-4 py-3 bg-surface border border-border rounded-xl text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition pr-16"
+          />
+          <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-foreground-muted pointer-events-none">years</span>
+        </div>
       </Field>
     </div>
   );
 }
 
+// ── Step 6: Declaration ───────────────────────────────────────────────────────
 const TERMS = [
   'I will not make false or misleading income claims.',
   'I will not misrepresent the Company or its products.',
@@ -365,9 +366,7 @@ const TERMS = [
   'I will not engage in any misleading or unlawful activity.',
 ];
 
-function StepDeclaration({ data, errors, onChange }: {
-  data: FormData; errors: FormErrors; onChange: (k: keyof FormData, v: boolean) => void;
-}) {
+function StepDeclaration({ data, errors, onChange }: { data: FormData; errors: FormErrors; onChange: (k: keyof FormData, v: boolean) => void }) {
   return (
     <div className="space-y-5">
       <div className="p-5 bg-surface border border-border rounded-2xl">
@@ -375,28 +374,20 @@ function StepDeclaration({ data, errors, onChange }: {
         <ul className="space-y-2.5">
           {TERMS.map((term, i) => (
             <li key={i} className="flex items-start gap-2.5 text-sm text-foreground-muted">
-              <span className="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
-                {i + 1}
-              </span>
+              <span className="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">{i + 1}</span>
               {term}
             </li>
           ))}
         </ul>
       </div>
-
       <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800 leading-relaxed">
-        <strong>Legal Notice:</strong> This is a legally binding agreement under Direct Selling Rules (India). The Company is not liable for failure due to natural disasters, government actions, or unforeseen circumstances. The Company reserves the right to modify policies. Any disputes shall be subject to the jurisdiction of the Company&apos;s registered office location.
+        <strong>Legal Notice:</strong> This is a legally binding agreement under Direct Selling Rules (India). The Company reserves the right to modify policies. Any disputes shall be subject to the jurisdiction of the Company&apos;s registered office location.
       </div>
-
-      <label
-        className={cn(
-          'flex items-start gap-3 p-4 rounded-xl border cursor-pointer transition-all',
-          data.declaration
-            ? 'border-primary bg-primary-light'
-            : 'border-border bg-surface hover:border-primary/50',
-          errors.declaration && 'border-red-400 bg-red-50'
-        )}
-      >
+      <label className={cn(
+        'flex items-start gap-3 p-4 rounded-xl border cursor-pointer transition-all',
+        data.declaration ? 'border-primary bg-primary-light' : 'border-border bg-surface hover:border-primary/50',
+        errors.declaration && 'border-red-400 bg-red-50'
+      )}>
         <input
           type="checkbox"
           checked={data.declaration}
@@ -418,11 +409,11 @@ function StepDeclaration({ data, errors, onChange }: {
 
 // ── Main component ────────────────────────────────────────────────────────────
 export default function RegistrationForm() {
-  const [step, setStep]           = useState(0);
-  const [data, setData]           = useState<FormData>(EMPTY);
-  const [errors, setErrors]       = useState<FormErrors>({});
+  const [step, setStep]               = useState(0);
+  const [data, setData]               = useState<FormData>(EMPTY);
+  const [errors, setErrors]           = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted, setSubmitted]     = useState(false);
   const [serverError, setServerError] = useState('');
   const formRef = useRef<HTMLDivElement>(null);
 
@@ -452,10 +443,8 @@ export default function RegistrationForm() {
   const handleSubmit = async () => {
     const e = validateStep(step, data);
     if (Object.keys(e).length > 0) { setErrors(e); return; }
-
     setIsSubmitting(true);
     setServerError('');
-
     try {
       const res = await fetch('/api/register', {
         method: 'POST',
@@ -477,7 +466,7 @@ export default function RegistrationForm() {
     }
   };
 
-  // ── Success ──────────────────────────────────────────────────────────────
+  // ── Success ───────────────────────────────────────────────────────────────
   if (submitted) {
     return (
       <AnimatedSection>
@@ -497,7 +486,7 @@ export default function RegistrationForm() {
             A confirmation email has been sent to <strong>{data.email}</strong>.
           </p>
           <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-800 text-left">
-            <strong>Next Step:</strong> Please submit self-attested copies of your Aadhaar, PAN, address proof, passport photo, and cancelled cheque to our office in person or via post.
+            <strong>What&apos;s next?</strong> Our team will contact you on WhatsApp or via the email address you provided to guide you through the next steps of the verification process.
           </div>
         </div>
       </AnimatedSection>
@@ -505,13 +494,12 @@ export default function RegistrationForm() {
   }
 
   const stepComponents = [
-    <StepPersonal   key="p" data={data} errors={errors} onChange={onChange as (k: keyof FormData, v: string) => void} />,
-    <StepContact    key="c" data={data} errors={errors} onChange={onChange as (k: keyof FormData, v: string) => void} />,
-    <StepNetwork    key="n" data={data} errors={errors} onChange={onChange as (k: keyof FormData, v: string) => void} />,
-    <StepKYC        key="k" data={data} errors={errors} onChange={onChange as (k: keyof FormData, v: string) => void} />,
-    <StepBank       key="b" data={data} errors={errors} onChange={onChange as (k: keyof FormData, v: string) => void} />,
-    <StepNominee    key="no" data={data} errors={errors} onChange={onChange as (k: keyof FormData, v: string) => void} />,
-    <StepDeclaration key="d" data={data} errors={errors} onChange={onChange as (k: keyof FormData, v: boolean) => void} />,
+    <StepPersonal    key="p"  data={data} errors={errors} onChange={onChange as (k: keyof FormData, v: string) => void} />,
+    <StepContact     key="c"  data={data} errors={errors} onChange={onChange as (k: keyof FormData, v: string) => void} />,
+    <StepKYC         key="k"  data={data} errors={errors} onChange={onChange as (k: keyof FormData, v: string) => void} />,
+    <StepBank        key="b"  data={data} errors={errors} onChange={onChange as (k: keyof FormData, v: string) => void} />,
+    <StepNominee     key="no" data={data} errors={errors} onChange={onChange as (k: keyof FormData, v: string) => void} />,
+    <StepDeclaration key="d"  data={data} errors={errors} onChange={onChange as (k: keyof FormData, v: boolean) => void} />,
   ];
 
   return (
@@ -520,19 +508,17 @@ export default function RegistrationForm() {
       <div className="flex items-center justify-between mb-8 overflow-x-auto pb-2">
         {STEPS.map((s, i) => {
           const Icon = s.icon;
-          const done = i < step;
+          const done   = i < step;
           const active = i === step;
           return (
             <div key={s.id} className="flex items-center">
               <div className="flex flex-col items-center gap-1">
-                <div
-                  className={cn(
-                    'w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300',
-                    done   ? 'bg-primary text-white'       : '',
-                    active ? 'bg-primary text-white ring-4 ring-primary/20' : '',
-                    !done && !active ? 'bg-surface border border-border text-foreground-muted' : ''
-                  )}
-                >
+                <div className={cn(
+                  'w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300',
+                  done   ? 'bg-primary text-white' : '',
+                  active ? 'bg-primary text-white ring-4 ring-primary/20' : '',
+                  !done && !active ? 'bg-surface border border-border text-foreground-muted' : ''
+                )}>
                   {done ? <CheckCircle2 size={18} /> : <Icon size={16} />}
                 </div>
                 <span className={cn('text-[10px] font-medium hidden sm:block', active ? 'text-primary' : 'text-foreground-muted')}>
@@ -556,11 +542,10 @@ export default function RegistrationForm() {
           <p className="text-sm text-foreground-muted mt-1">
             {step === 0 && 'Enter your personal details as per official documents.'}
             {step === 1 && 'Provide your contact information and current address.'}
-            {step === 2 && 'Enter your sponsor and network placement details.'}
-            {step === 3 && 'Your KYC details for identity verification.'}
-            {step === 4 && 'Bank account details for commission payments.'}
-            {step === 5 && 'Nominee details for your distributor account.'}
-            {step === 6 && 'Review the declaration and submit your application.'}
+            {step === 2 && 'Your KYC details for identity verification.'}
+            {step === 3 && 'Bank account details for commission payments.'}
+            {step === 4 && 'Nominee details for your distributor account.'}
+            {step === 5 && 'Review the declaration and submit your application.'}
           </p>
         </div>
 
@@ -598,11 +583,9 @@ export default function RegistrationForm() {
             </Button>
           ) : (
             <Button onClick={handleSubmit} disabled={isSubmitting} className="flex-1 sm:flex-none">
-              {isSubmitting ? (
-                <><Loader2 size={16} className="animate-spin" /> Submitting...</>
-              ) : (
-                <><Send size={16} /> Submit Application</>
-              )}
+              {isSubmitting
+                ? <><Loader2 size={16} className="animate-spin" /> Submitting...</>
+                : <><Send size={16} /> Submit Application</>}
             </Button>
           )}
         </div>
