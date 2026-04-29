@@ -29,14 +29,14 @@ export default function Header() {
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled
+        isScrolled || isMobileMenuOpen
           ? "bg-background/95 backdrop-blur-lg shadow-lg border-b border-border"
           : "bg-transparent",
       )}
     >
       <nav className={cn("mx-auto", CONTAINER_MAX_WIDTH, CONTAINER_PADDING)}>
         <div className="flex items-center justify-between h-20 lg:h-24">
-          {/* Logo  */}
+          {/* Logo */}
           <Link href="/" className="flex items-center group shrink-0">
             <div className="relative w-28 lg:w-36 transition-transform group-hover:scale-105">
               <Image
